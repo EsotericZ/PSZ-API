@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+const wishlistSchema = require('./Wishlist');
+
 const userSchema = new Schema({
     // username: {
     //     type: String,
@@ -10,20 +12,9 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    firstName: {
+    psn: {
         type: String,
         required: true,
-    },
-    lastName: {
-        type: String,
-        required: true,
-    },
-    ranks: {
-        singlesMale: Number,
-        singlesFemale: Number,
-        doublesMale: Number,
-        doublesFemale: Number,
-        mixed: Number,
     },
     roles: {
         player: {
@@ -31,13 +22,12 @@ const userSchema = new Schema({
             default: 2001
         },
         admin: Number,
-        blogger: Number,
-        director: Number,
     },
     password: {
         type: String,
         required: true
     },
+    wishlist: [wishlistSchema],
     refreshToken: [String],
 });
 

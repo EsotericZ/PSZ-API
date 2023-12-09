@@ -2073,3 +2073,4 @@
 20230924	15:18:59	7ee4f41c-f3be-41b2-a8e0-f3d43513ea97	GET	http://localhost:3000	/portal/refresh
 20230924	15:20:11	fd945b17-0c4c-43af-a2f7-d4e07fda2910	GET	http://localhost:3000	/portal/refresh
 20230924	15:21:10	f79219ae-34bd-4fbd-86b4-59048483ed97	GET	http://localhost:3000	/portal/refresh
+20231205	19:12:19	3deb3639-18b0-4ab3-8ba8-e8ed3aba0942	GET	undefined	/
