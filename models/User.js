@@ -4,11 +4,7 @@ const { Schema } = mongoose;
 const wishlistSchema = require('./Wishlist');
 
 const userSchema = new Schema({
-    // username: {
-    //     type: String,
-    //     required: true
-    // },
-    email: {
+    username: {
         type: String,
         required: true
     },

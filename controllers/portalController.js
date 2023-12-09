@@ -4,29 +4,26 @@ const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
     const cookies = req.cookies;
-    const { email, password } = req.body; 
-    const userFound = await User.findOne({ email: email }).exec();
+    const { username, password } = req.body; 
+    const userFound = await User.findOne({ username: username }).exec();
     if (!userFound) return res.sendStatus(401);
 
     const passwordCheck = await bcrypt.compare(password, userFound.password);
     if (passwordCheck) {
         const roles = Object.values(userFound.roles).filter(Boolean);
-        const ranks = Object.values(userFound.ranks).filter(Boolean);
         const accessToken = jwt.sign(
             {
                 "userInfo": {
-                    "email": userFound.email,
+                    "username": userFound.username,
                     "roles": roles,
-                    "firstName": userFound.firstName,
-                    "lastName": userFound.lastName,
-                    "ranks": ranks,
+                    "psn": userFound.psn,
                 }
             },
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '10m' }
         );
         const newRefreshToken = jwt.sign(
-            { "email": userFound.email, },
+            { "username": userFound.username, },
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: '1d' }
         );
@@ -93,7 +90,7 @@ const refreshToken = async (req, res) => {
             process.env.REFRESH_TOKEN_SECRET,
             async (err, decoded) => {
                 if (err) return res.sendStatus(403);
-                const hackedUser = await User.findOne({ email: decoded.email }).exec();
+                const hackedUser = await User.findOne({ username: decoded.username }).exec();
                 hackedUser.refreshToken = [];
                 await hackedUser.save();
             }
@@ -112,15 +109,12 @@ const refreshToken = async (req, res) => {
             }
             if (err || userFound.username !== decoded.username) return res.sendStatus(403);
             const roles = Object.values(userFound.roles);
-            const ranks = Object.values(userFound.ranks);
             const accessToken = jwt.sign(
                 {
                     "userInfo": {
-                        "email": decoded.email,
+                        "username": decoded.username,
                         "roles": roles,
-                        "firstName": userFound.firstName,
-                        "lastName": userFound.lastName,
-                        "ranks": ranks,
+                        "psn": userFound.psn,
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
@@ -128,7 +122,7 @@ const refreshToken = async (req, res) => {
             );
 
             const newRefreshToken = jwt.sign(
-                { "email": userFound.email, },
+                { "username": userFound.username, },
                 process.env.REFRESH_TOKEN_SECRET,
                 { expiresIn: '1d' }
             );
@@ -144,22 +138,21 @@ const refreshToken = async (req, res) => {
 
 
 const register = async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
-    if (!firstName || !lastName || !email || !password) return res.status(400).json({ 'message': 'email and password are required.' });
+    const { psn, username, password } = req.body;
+    if (!psn || !username || !password) return res.status(400).json({ 'message': 'username and password are required.' });
 
-    const duplicate = await User.findOne({ email: email }).exec();
+    const duplicate = await User.findOne({ username: username }).exec();
     if (duplicate) return res.sendStatus(409);
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         await User.create({
-            "email": email,
+            "username": username,
             "password": hashedPassword,
-            "firstName": firstName,
-            "lastName": lastName,
+            "psn": psn,
         });
 
-        res.status(201).json({ 'success': `${email} created!` });
+        res.status(201).json({ 'success': `${username} created!` });
     } catch (err) {
         res.status(500).json({ 'message': err.message });
     }
