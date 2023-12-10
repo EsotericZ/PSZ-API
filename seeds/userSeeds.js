@@ -12,13 +12,26 @@ const seedUsers = [
         username: 'admin',
         psn: 'PSZReviews',
         password: encryptedPassword,
-        role: 'admin',
+        roles: {
+            'admin': 1089,
+        },
     },
     {
         username: 'EsotericZ',
         psn: 'Esoteric-Z',
         password: encryptedPassword,
-        role: 'player',
+        roles: {
+            'admin': 1089,
+            'player': 2001,
+        },
+    },
+    {
+        username: 'player',
+        psn: 'player',
+        password: encryptedPassword,
+        roles: {
+            'player': 2001,
+        },
     },
 ]
 
