@@ -1,4 +1,3 @@
-const { User } = require('../models');
 const CryptoJS = require('crypto-js');
 
 require('dotenv').config();
@@ -8,7 +7,7 @@ let encryptedPassword = CryptoJS.AES.encrypt(
     process.env.SECRET_KEY || '1234'
 ).toString();
 
-const userData = [
+const seedUsers = [
     {
         username: 'admin',
         psn: 'PSZReviews',
@@ -22,7 +21,5 @@ const userData = [
         role: 'player',
     },
 ]
-
-const seedUsers = () => User.bulkCreate(userData);
 
 module.exports = seedUsers;
