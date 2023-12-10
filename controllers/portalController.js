@@ -5,11 +5,17 @@ const jwt = require("jsonwebtoken");
 const login = async (req, res) => {
     const cookies = req.cookies;
     const { username, password } = req.body; 
+    console.log(username, password);
+
     const userFound = await User.findOne({ username: username }).exec();
     if (!userFound) return res.sendStatus(401);
-
+    console.log(userFound)
     const passwordCheck = await bcrypt.compare(password, userFound.password);
+    console.log('?')
+    console.log(password, userFound.password);
+    console.log(passwordCheck)
     if (passwordCheck) {
+        console.log('2?')
         const roles = Object.values(userFound.roles).filter(Boolean);
         const accessToken = jwt.sign(
             {

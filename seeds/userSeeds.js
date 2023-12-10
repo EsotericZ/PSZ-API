@@ -1,25 +1,22 @@
-const CryptoJS = require('crypto-js');
-
+const bcrypt = require('bcrypt');
 require('dotenv').config();
 
-let encryptedPassword = CryptoJS.AES.encrypt(
-    'password',
-    process.env.SECRET_KEY || '1234'
-).toString();
+let hashedPassword = bcrypt.hashSync(process.env.USER_PASS, 10);
 
 const seedUsers = [
     {
         username: 'admin',
         psn: 'PSZReviews',
-        password: encryptedPassword,
+        password: hashedPassword,
         roles: {
             'admin': 1089,
+            'player': 2001,
         },
     },
     {
         username: 'EsotericZ',
         psn: 'Esoteric-Z',
-        password: encryptedPassword,
+        password: hashedPassword,
         roles: {
             'admin': 1089,
             'player': 2001,
@@ -28,7 +25,7 @@ const seedUsers = [
     {
         username: 'player',
         psn: 'player',
-        password: encryptedPassword,
+        password: hashedPassword,
         roles: {
             'player': 2001,
         },
