@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
-let hashedPassword = bcrypt.hashSync(process.env.USER_PASS, 10);
+let hashedPassword = bcrypt.hashSync(process.env.USER_PASS, process.env.SALT_ROUNDS);
 
 const seedUsers = [
     {
