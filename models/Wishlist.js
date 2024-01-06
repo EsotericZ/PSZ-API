@@ -1,8 +1,8 @@
 const { Schema } = require('mongoose');
 
 const wishlistSchema = new Schema({
-    title: {
-        type: String,
+    gameId: {
+        type: Number,
     }
 });
 

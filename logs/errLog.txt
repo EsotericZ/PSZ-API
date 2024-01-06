@@ -7,3 +7,4 @@
 20230805	21:15:04	af7ea0d7-8211-4bcd-b901-58f737d2e34b	TypeError: Cannot read properties of undefined (reading 'email')
 20230805	21:28:27	853bd6f0-ce88-4a23-be98-fca1f2748b88	TypeError: Cannot read properties of undefined (reading 'email')
 20230805	21:45:25	835a0ac4-03e4-4cf1-a237-4896ba18887a	TypeError: Cannot read properties of undefined (reading 'split')
+20240105	11:58:10	0c539c6e-682a-497c-8dc6-5c5aceb61cf0	ReferenceError: path is not defined
